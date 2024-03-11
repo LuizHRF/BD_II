@@ -18,12 +18,15 @@ int main(int argc, char *argv[]){
     
     Table_info *table_info = is_in_table(argv[1], tables_file); //Verifica se o nome logico passado por parametro existe entre as tabelas
 
+
     if(table_info != NULL){
 
         FILE *att = fopen("homework/att.dic", "r+"); //Se existir, abre o arquivo de atributos
+
         Table *Final = setup_tab(tables_file, table_info, att);
 
-        print_table(Final);
+        int n =  numberof_att(Final->meta.id, att).specific;
+        print_table(Final, n);
     }
 
     printf("Aperte enter para finalizar\n");
