@@ -10,6 +10,7 @@
 
 int main(int argc, char *argv[]){
 
+
     //argv[1] para acessar o input
     
     FILE *tables_file = fopen("homework/table.dic", "r+"); //Abre arquivo

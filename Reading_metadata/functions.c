@@ -46,7 +46,7 @@ int numberof_table(FILE *f){ //Calcula o número de tabelas de um arquivo
         Table_info table1;
         fread(&table1, sizeof(Table_info), 1, f);
 
-        printf("Nome: %s\tID: %d\tLocal: %s\n", table1.log_name, table1.id, table1.phy_name);
+        //printf("Nome: %s\tID: %d\tLocal: %s\n", table1.log_name, table1.id, table1.phy_name);
         n+=1;
     }
 
@@ -59,7 +59,7 @@ Number_atributes numberof_att(int table_id, FILE *att){ //Calcula o numero de at
     Number_atributes NA;
     NA.general = 0;
     NA.specific = 0;
-    printf("Atributos:\n");
+    //printf("Atributos:\n");
 
     while(!feof(att)){
         Table_att table_att1;
@@ -97,7 +97,7 @@ Table_info* is_in_table(char log_name[], FILE *f){ //Identifica se dada tabela e
     for(int i=0; i<n; i++){
 
         if(!strcmp(log_name, tables[i].log_name)){
-            printf("\nTabela encontrada\n\n");
+            printf("\nTabela encontrada\n");
             Table_info *ta = malloc(sizeof(Table_info));
             ta->id = tables[i].id;
             strcpy(ta->log_name, tables[i].log_name);
@@ -153,10 +153,11 @@ Table *setup_tab(FILE *f, Table_info *t, FILE *att){ //Retorna uma estrutura pro
 }
 
 void print_table(Table *t, int size){
-    printf("<ID: %d\tNOME:%s\tLOCAL:%s>\n", t->meta.id, t->meta.log_name, t->meta.phy_name);
+    printf("<ID: %d\tNOME:%s\tLOCAL:%s>\n\n", t->meta.id, t->meta.log_name, t->meta.phy_name);
     printf("Atributos: %d\n", size);
 
     for(int i=0; i<size; i++){
         printf("<%d, %s, %c, %d, %d>\n", t->atributes[i].id, t->atributes[i].att_name, t->atributes[i].type, t->atributes[i].opt, t->atributes[i].size);
     }
+    printf("\n");
 }
