@@ -174,16 +174,32 @@ void print_table(Table *t){
 
 void read_table_content(Table *t){
 
-    FILE *c = fopen("homework/222.dat", "rb+");
+    char dir[20] = "homework/";
+    strcat(dir, t->meta.phy_name);
+
+    FILE *c = fopen(dir, "rb+");
     validate(c);
 
-    if (c == NULL){
-        printf("Erro ao abrir conteúdo"); 
-        return;
-    }else {
-        printf("Conteúdos abertos com sucesso\n");
+    for(int i=0; i<t->size; i++){
+        printf("%s\t\t", t->atributes[i].att_name);
     }
+        printf("\n");
 
+    int cod;
+    char descr[30];
+    double preco;
+    double desc;
+
+    while(!feof(c)){
+
+        fread(&cod, sizeof(int), 4, c);
+        fread(descr, sizeof(char), 30, c);
+        fread(&preco, sizeof(double), 4, c);
+        fread(&desc, sizeof(double), 8, c);
+
+        printf("%d\t%s\t\t%lf\t%lf\n", cod, descr, preco, desc);
+        if(feof(c)){break;}
+    }
 }
 
 int readFile(char* name){
@@ -200,10 +216,8 @@ int readFile(char* name){
         validate(att);
 
         Table *Final = setup_tab(tables_file, table_info, att);
-        fclose(att);
-        print_table(Final);
-
         
+        //print_table(Final);
 
         read_table_content(Final);
 
