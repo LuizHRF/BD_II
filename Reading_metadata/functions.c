@@ -1,38 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct table_info{ 
-    int id;
-    char log_name[20];
-    char phy_name[20];
-}Table_info;
-
-typedef struct table_att{
-    int id;
-    char att_name[20];
-    char type;
-    char opt;
-    int size;
-}Table_att;
-
-typedef struct table{
-    int size;
-    Table_info meta;
-    Table_att atributes[];
-}Table;
-
-typedef struct number_atributes{
-    int general;
-    int specific;
-}Number_atributes;
+#include "functions.h"
 
 int validate(FILE *f){
     if (f == NULL){
         printf("\nFalha ao abrir arquivo\n\n");
         return 0;
     } else {
-        printf("\nArquivo aberto com sucesso\n\n");
+        //printf("\nArquivo aberto com sucesso\n\n");
         return 1;
     }
 
@@ -102,7 +75,7 @@ Table_info* is_in_table(char log_name[], FILE *f){ //Identifica se dada tabela e
     for(int i=0; i<n; i++){
 
         if(!strcmp(log_name, tables[i].log_name)){
-            printf("\nTabela encontrada\n");
+            //printf("\nTabela encontrada\n");
             Table_info *ta = malloc(sizeof(Table_info));
             ta->id = tables[i].id;
             strcpy(ta->log_name, tables[i].log_name);
@@ -185,20 +158,22 @@ void read_table_content(Table *t){
     }
         printf("\n");
 
-    int cod;
+    char cod[4];
     char descr[30];
-    double preco;
-    double desc;
+    char preco[4];
+    double desc[8];
 
     while(!feof(c)){
 
-        fread(&cod, sizeof(int), 4, c);
+        fread(cod, sizeof(char), 4, c);
         fread(descr, sizeof(char), 30, c);
-        fread(&preco, sizeof(double), 4, c);
-        fread(&desc, sizeof(double), 8, c);
+        fread(preco, sizeof(char), 4, c);
+        fread(desc, sizeof(char), 8, c);
 
-        printf("%d\t%s\t\t%lf\t%lf\n", cod, descr, preco, desc);
+        printf("%d%d%d%d\t%s\t\t%lf\t%lf\n", cod[0], cod[1], cod[2], cod[3], descr, preco, desc);
         if(feof(c)){break;}
+
+        
     }
 }
 

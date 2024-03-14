@@ -1,13 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "functions.c"
 
-//  gcc [aplicativo].c -o [nome executável de saída] para compilar
+#include "functions.h"
+
+//  gcc [aplicativo].c [funções].c -o [nome executável de saída] para compilar
 //  .\[executável] [argumento de entrada] para executar
-
-
-//A contagem de tabelas está contabilizando uma extra, atributos tmb
-
 
 int main(int argc, char *argv[]){
      
