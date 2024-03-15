@@ -158,23 +158,41 @@ void read_table_content(Table *t){
     }
         printf("\n");
 
-    char cod[4];
-    char descr[30];
-    char preco[4];
-    double desc[8];
 
-    while(!feof(c)){
-
-        fread(cod, sizeof(char), 4, c);
-        fread(descr, sizeof(char), 30, c);
-        fread(preco, sizeof(char), 4, c);
-        fread(desc, sizeof(char), 8, c);
-
-        printf("%d%d%d%d\t%s\t\t%lf\t%lf\n", cod[0], cod[1], cod[2], cod[3], descr, preco, desc);
-        if(feof(c)){break;}
-
+    do{ 
         
-    }
+
+        for(int i=0; i< t->size; i++){
+            char buffer[100];
+            
+            switch (t->atributes[i].type){
+
+                case 'I':
+
+                    fread(buffer, sizeof(char), 4, c);
+                    if(feof(c)){break;}
+                    printf("%d", buffer);
+                    printf("\t");
+                    break;
+
+                case 'S':
+
+                    fread(buffer, sizeof(char), t->atributes[i].size, c);
+                    if(feof(c)){break;}
+                    printf("%s\t", buffer);
+                    break;
+
+                case 'D':
+
+                    fread(buffer, sizeof(double), 1, c);
+                    if(feof(c)){break;}
+                    printf("%lf\t", buffer);
+                    break;
+            }
+            
+        }
+        printf("\n");
+    }while(!feof(c));
 }
 
 int readFile(char* name){
