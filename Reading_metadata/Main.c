@@ -1,17 +1,20 @@
 
 #include "functions.h"
 
-//  gcc [aplicativo].c [funções].c -o [nome executável de saída] para compilar
+//  gcc Main.c functions.c -o [nome executável de saída] para compilar
 //  .\[executável] [argumento de entrada] para executar
 
 int main(int argc, char *argv[]){
      
-    if (argc>1)
+    if (argc==2)
     {
         readFile(argv[1]);
         return 0;
-    }
-    printf("Missing parameter: logical file name\n");
+    }else if (argc > 2){
+        printf("Too many parameters\n");
+    } else {
+        printf("Missing parameter: logical file name\n");
+        }
     return 0;
     
 }

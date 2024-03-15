@@ -93,6 +93,7 @@ Table_info* is_in_table(char log_name[], FILE *f){ //Identifica se dada tabela e
 
 Table *setup_tab(FILE *f, Table_info *t, FILE *att){ //Retorna uma estrutura pronta com todas infos de uma tabela e também de seus campos
 
+    
     Table *table_done = malloc(sizeof(Table));
 
     table_done->meta.id = t->id;
@@ -103,7 +104,6 @@ Table *setup_tab(FILE *f, Table_info *t, FILE *att){ //Retorna uma estrutura pro
     table_done->size = n.specific;
 
     if(n.specific == 0){
-        printf("Tabela sem atributos\n");
         return NULL;
     }
 
@@ -150,7 +150,7 @@ void read_table_content(Table *t){
     char dir[20] = "homework/";
     strcat(dir, t->meta.phy_name);
 
-    FILE *c = fopen(dir, "rb+");
+    FILE *c = fopen(dir, "r+");
     validate(c);
 
     for(int i=0; i<t->size; i++){
@@ -163,16 +163,18 @@ void read_table_content(Table *t){
         
 
         for(int i=0; i< t->size; i++){
+
             char buffer[100];
+            int buffer2;
+            double buffer3;
             
             switch (t->atributes[i].type){
 
                 case 'I':
 
-                    fread(buffer, sizeof(char), 4, c);
+                    fread(&buffer2, sizeof(char), 4, c);
                     if(feof(c)){break;}
-                    printf("%d", buffer);
-                    printf("\t");
+                    printf("%d\t\t", buffer2);
                     break;
 
                 case 'S':
@@ -184,9 +186,9 @@ void read_table_content(Table *t){
 
                 case 'D':
 
-                    fread(buffer, sizeof(double), 1, c);
+                    fread(&buffer3, sizeof(char), 8, c);
                     if(feof(c)){break;}
-                    printf("%lf\t", buffer);
+                    printf("%lf\t", buffer3);
                     break;
             }
             
@@ -209,6 +211,10 @@ int readFile(char* name){
         validate(att);
 
         Table *Final = setup_tab(tables_file, table_info, att);
+        if(Final == NULL){
+            printf("Tabela sem atributos\n");
+            return EXIT_FAILURE;
+        }
         
         //print_table(Final);
 
