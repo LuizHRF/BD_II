@@ -64,6 +64,7 @@ Table_info* is_in_table(char log_name[], FILE *f){ //Identifica se dada tabela e
     while(!feof(f)){
         Table_info t;
         fread(&t, sizeof(Table_info), 1, f);
+        if(feof(f)){break;}
 
         strcpy(tables[count].log_name, t.log_name);
         strcpy(tables[count].phy_name, t.phy_name);
