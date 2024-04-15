@@ -27,3 +27,9 @@ NO PSQL:
 	ALTER DATABASE atividade_obj OWNER TO usuario1;
 	
 	\c aividade_obj;
+	
+	\i script.sql;
+	
+	CALL ins_product(1000);
+	CALL ins_sale(500);
+	CALL ins_sale_item(1001);

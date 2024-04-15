@@ -90,16 +90,16 @@ begin
     -- executa qttup vezes
     loop
         -- seleciona um sid
-        sale_item_tup.sid := array_sale[(random()*qt_sale)::int+1];
+        sale_item_tup.sid := array_sale[(random()*(qt_sale-1))::int+1];
 
         -- impede que tente inserir em uma sale ja existente
-        if (not exists(select 1 from sale_item where sid=sale_item_tup.sid))
-            then
+        --if (not exists(select 1 from sale_item where sid=sale_item_tup.sid))
+        --    then
 
             --executa nprod vezes (vindo de itBySale)
             loop
                 -- seleciona um pid e um sqty
-                sale_item_tup.pid := array_prod[(random()*qt_prod)::int+1];
+                sale_item_tup.pid := array_prod[(random()*(qt_prod-1))::int+1];
                 sale_item_tup.sqty := (random()*1000)::int;
 
                 -- insere em sale item
@@ -108,6 +108,7 @@ begin
                     then
                     insert into sale_item (sid, pid, sqty) values (sale_item_tup.sid, sale_item_tup.pid, sale_item_tup.sqty);
                     counter_nprod := counter_nprod + 1;
+                    raise notice '%',counter_nprod;
                 end if;
 
                 exit when counter_nprod > nprod;
@@ -115,7 +116,7 @@ begin
 
             counter := counter +1;
 
-        end if;
+        --end if;
 
         exit when counter >= qttup;
     end loop;
