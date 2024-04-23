@@ -16,20 +16,35 @@ NO PSQL:
 		
 	CREATE USER usuario1 PASSWORD 'usuario1';
 	CREATE USER usuario2 PASSWORD 'usuario2';
-
+	
+	CREATE DATABASE atividade_obj TABLESPACE tbs01;
+		
+	\c atividade_obj;
+	
 	CREATE SCHEMA schema1;
 	CREATE SCHEMA schema2;
+	ALTER SCHEMA schema1 OWNER TO usuario1;
+	
+	ALTER DATABASE atividade_obj set search_path = schema1;
+	ALTER DATABASE OWNER TO usuario1;
 
 	ALTER USER usuario1 SET search_path TO schema1;
 	
-	CREATE DATABASE atividade_obj TABLESPACE tbs01;
-
-	ALTER DATABASE atividade_obj OWNER TO usuario1;
+	\c postgres;
 	
-	\c aividade_obj;
+	\c atividade_obj usuario1;
+	usuario1;
 	
 	\i script.sql;
 	
 	CALL ins_product(1000);
 	CALL ins_sale(500);
 	CALL ins_sale_item(1001);
+	
+	\i audict.sql;
+	
+	GRANT SELECT ON TABLE product, sale TO usuario2;
+	GRANT ALL ON TABLE sale_item TO usuario2;
+	
+	CREATE INDEX bt_sales ON sale USING btree (sdate) INCLUDE (address);
+	
