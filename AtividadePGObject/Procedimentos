@@ -4,9 +4,9 @@ NO TERMINAL LINUX:
 	sudo mkdir /data/tbs01
 	sudo mkdir /data/tbs02
 
-	sudo chown postgres.postgres data
-	sudo chown postgres.postgres data/tbs01
-	sudo chown postgres.postgres data/tbs02
+	sudo chown postgres.postgres /data
+	sudo chown postgres.postgres /data/tbs01
+	sudo chown postgres.postgres /data/tbs02
 
 
 NO PSQL:
@@ -26,14 +26,14 @@ NO PSQL:
 	ALTER SCHEMA schema1 OWNER TO usuario1;
 	
 	ALTER DATABASE atividade_obj set search_path = schema1;
-	ALTER DATABASE OWNER TO usuario1;
+	ALTER DATABASE atividade_obj OWNER TO usuario1;
 
 	ALTER USER usuario1 SET search_path TO schema1;
 	
 	\c postgres;
 	
 	\c atividade_obj usuario1;
-	usuario1;
+	usuario1
 	
 	\i script.sql;
 	
